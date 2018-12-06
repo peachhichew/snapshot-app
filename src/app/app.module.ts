@@ -9,6 +9,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -16,6 +22,10 @@ import { AppComponent } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
+    File,
+    FileTransfer,
+    FileChooser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -1,6 +1,8 @@
 {
   "name": "snapshot-app",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "3ba3e065"
 }
