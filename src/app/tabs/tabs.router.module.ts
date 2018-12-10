@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
 import { HomePage } from '../home/home.page';
-import { AboutPage } from '../about/about.page';
-import { ContactPage } from '../contact/contact.page';
+// import { AboutPage } from '../about/about.page';
+// import { ContactPage } from '../contact/contact.page';
+import { ResultsPage } from '../results/results.page';
+import { UploadedPage } from '../uploaded/uploaded.page';
 
 const routes: Routes = [
   {
@@ -21,15 +23,25 @@ const routes: Routes = [
         outlet: 'home',
         component: HomePage
       },
+      // {
+      //   path: 'about',
+      //   outlet: 'about',
+      //   component: AboutPage
+      // },
+      // {
+      //   path: 'contact',
+      //   outlet: 'contact',
+      //   component: ContactPage
+      // },
       {
-        path: 'about',
-        outlet: 'about',
-        component: AboutPage
+        path: 'results',
+        outlet: 'results',
+        component: ResultsPage
       },
       {
-        path: 'contact',
-        outlet: 'contact',
-        component: ContactPage
+        path: 'uploaded',
+        outlet: 'uploaded',
+        component: UploadedPage
       }
     ]
   },
@@ -44,4 +56,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
