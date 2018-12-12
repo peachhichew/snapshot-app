@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReturnDataService } from '../return-data.service';
 
 @Component({
   selector: 'app-results',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultsPage implements OnInit {
 
-  constructor() { }
+  constructor(private returnDataService: ReturnDataService) { }
 
   ngOnInit() {
+    this.returnDataService.getData();
   }
 
 }
