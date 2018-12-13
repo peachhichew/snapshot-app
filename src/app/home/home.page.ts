@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-import { File, FileEntry } from '@ionic-native/file/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-// import { HttpClient } from '@angular/common/http';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReturnDataService } from '../return-data.service';
 
@@ -15,10 +11,8 @@ import { ReturnDataService } from '../return-data.service';
 })
 export class HomePage implements OnInit {
   base64Image: any;
-  // public dataReturned: object;
 
   constructor(private camera: Camera,
-    private transfer: FileTransfer,
     public alertController: AlertController,
     public toastController: ToastController,
     public loadingController: LoadingController,
@@ -26,11 +20,12 @@ export class HomePage implements OnInit {
     private returnDataService: ReturnDataService) { }
 
   ngOnInit() {
-    this.base64Image = "../turkey.jpeg";
+    this.base64Image = "../default.jpg";
     console.log(this.base64Image);
     // console.log(this.dataReturned);
   }
 
+  // allows user to upload images using the photo library as the image source
   getImage() {
     const options: CameraOptions = {
       quality: 100,
@@ -42,6 +37,7 @@ export class HomePage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE
     }
 
+    // when cordova has access to the picture, upload it
     this.camera.getPicture(options).then((imageData) => {
       this.uploadImage(imageData);
     }, (err) => {
@@ -50,6 +46,7 @@ export class HomePage implements OnInit {
     });
   }
 
+  // allows user to upload an image from their camera 
   takePhoto() {
     const options: CameraOptions = {
       quality: 100,
@@ -60,20 +57,23 @@ export class HomePage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE
     }
 
+    // upload image once cordova gets it
     this.camera.getPicture(options).then((imageData) => {
       this.uploadImage(imageData);
-
     }, err => {
-      // this.presentAlert(err);
+      this.presentAlert(err);
       console.log(err);
     });
   }
 
+  // upload image to the server
   uploadImage(imageData) {
     this.base64Image = 'data:image/png;base64,' + imageData;
 
+    // display loading animation during upload
     this.presentLoading();
 
+    // here are the parameters we will need for our POST request
     let formData = {
       'base64image': imageData,
       'submit': 'submit'
@@ -81,18 +81,24 @@ export class HomePage implements OnInit {
 
     this.http.post('http://parcohome.ddns.net/imagerecognition.php', formData, {})
       .then((data) => {
+        // show confirmation message when successful
         this.presentToast("Image uploaded successfully");
         console.log(data.data);
-        // this.dataReturned = data.data;
-        // console.log('data after upload: ', this.dataReturned);
-        this.returnDataService.setData(data.data);
-        // this.returnDataService.getData();
+        // if the image could not be classified or is considered "non-food", alert the user
+        if (data.data === "The image was not classified as food by the IBM Image Recognition API.") {
+          this.presentAlert('The image was not classified as food by the IBM Image Recognition API.');
+        } 
+        // else we update the dataReturned object in our returnDataService
+        else {
+          this.returnDataService.setData(data.data);
+        }
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
+  // shows toast messages
   async presentToast(msg) {
     const toast = await this.toastController.create({
       message: msg,
@@ -105,6 +111,7 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
+  // shows alerts
   async presentAlert(msg) {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -115,6 +122,7 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
+  // displays loading animation
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Uploading',

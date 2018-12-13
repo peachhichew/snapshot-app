@@ -19,6 +19,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 // import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
+// import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,4 +39,4 @@ import { HTTP } from '@ionic-native/http/ngx';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

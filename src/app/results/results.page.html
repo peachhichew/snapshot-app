@@ -5,6 +5,105 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Here are your results:</p>
-  <p [(ngModel)]="returnDataService.dataReturned"></p>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Here are the results for your image:</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>Name</p>
+        <ion-text>
+          <p>{{result.name}}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Weight</p>
+        <ion-text>
+          <p>{{result.weight}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Calories</p>
+        <ion-text>
+          <p>{{result.calories}}cal</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Total Fat</p>
+        <ion-text>
+          <p>{{result.totalFat}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Saturated Fat</p>
+        <ion-text>
+          <p>{{result.saturatedFat}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Cholesterol</p>
+        <ion-text>
+          <p>{{result.cholesterol}}mg</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Sodium</p>
+        <ion-text>
+          <p>{{result.sodium}}mg</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Total Carbs</p>
+        <ion-text>
+          <p>{{result.carbs}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Dietary Fiber</p>
+        <ion-text>
+          <p>{{result.fiber}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Total Sugars</p>
+        <ion-text>
+          <p>{{result.sugar}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Protein</p>
+        <ion-text>
+          <p>{{result.protein}}g</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Potassium</p>
+        <ion-text>
+          <p>{{result.potassium}}mg</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

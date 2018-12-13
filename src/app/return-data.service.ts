@@ -9,14 +9,15 @@ export class ReturnDataService {
 
   constructor() { }
 
+  // set property for our data
+  // parse the data we got back from the server
   setData(data) {
-    this.dataReturned = data;
-    console.log('setData()', this.dataReturned);
+    this.dataReturned = JSON.parse(data);
     return this.dataReturned;
   }
 
+  // get property for data in order for it to be accessed elsewhere
   getData() {
-    console.log("getData()", this.dataReturned);
     return this.dataReturned;
   }
 }
