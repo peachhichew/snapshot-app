@@ -20,6 +20,9 @@ import { IonicStorageModule } from '@ionic/storage';
 // import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
 // import { FormsModule } from '@angular/forms';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { SQLiteProvider } from '../providers/SQLiteProvider';
+// /Users/sky/Documents/School/ISTE-252/snapshot-app/src/providers/SQLiteProvider.ts
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +38,8 @@ import { HTTP } from '@ionic-native/http/ngx';
     FileChooser,
     WebView,
     HTTP,
+    SQLite,
+    SQLiteProvider,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

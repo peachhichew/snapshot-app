@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { AlertController, ToastController, LoadingController, Platform } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReturnDataService } from '../return-data.service';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { SQLiteProvider } from '../../providers/SQLiteProvider';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,14 @@ export class HomePage implements OnInit {
     public toastController: ToastController,
     public loadingController: LoadingController,
     private http: HTTP,
-    private returnDataService: ReturnDataService) { }
+    private returnDataService: ReturnDataService,
+    public platform: Platform,
+    private sqlite: SQLite,
+    private SQLProvider: SQLiteProvider) { 
+      platform.ready().then(() => {
+        this.SQLProvider.createDatabase();
+      });
+    }
 
   ngOnInit() {
     this.base64Image = "../default.jpg";
@@ -79,7 +88,9 @@ export class HomePage implements OnInit {
       'submit': 'submit'
     };
 
-    this.http.post('http://parcohome.ddns.net/imagerecognition.php', formData, {})
+    // https://everyonelikesagoodme.me/imagerecognition.php
+    // http://parcohome.ddns.net/imagerecognition.php
+    this.http.post('https://everyonelikesagoodme.me/imagerecognition.php', formData, {})
       .then((data) => {
         // show confirmation message when successful
         this.presentToast("Image uploaded successfully");
@@ -91,6 +102,9 @@ export class HomePage implements OnInit {
         // else we update the dataReturned object in our returnDataService
         else {
           this.returnDataService.setData(data.data);
+          let parsedResponse = JSON.parse(data.data);
+          //console.log(parsedResponse);
+          this.SQLProvider.insertNewFood(parsedResponse.name, data.data);
         }
       })
       .catch((error) => {
