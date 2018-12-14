@@ -22,11 +22,11 @@ export class HomePage implements OnInit {
     private returnDataService: ReturnDataService,
     public platform: Platform,
     private sqlite: SQLite,
-    private SQLProvider: SQLiteProvider) { 
-      platform.ready().then(() => {
-        this.SQLProvider.createDatabase();
-      });
-    }
+    private SQLProvider: SQLiteProvider) {
+    platform.ready().then(() => {
+      this.SQLProvider.createDatabase();
+    });
+  }
 
   ngOnInit() {
     this.base64Image = "../default.jpg";
@@ -88,23 +88,29 @@ export class HomePage implements OnInit {
       'submit': 'submit'
     };
 
-    // https://everyonelikesagoodme.me/imagerecognition.php
-    // http://parcohome.ddns.net/imagerecognition.php
+    // send a POST request to upload the image onto the server
     this.http.post('https://everyonelikesagoodme.me/imagerecognition.php', formData, {})
       .then((data) => {
         // show confirmation message when successful
         this.presentToast("Image uploaded successfully");
-        console.log(data.data);
+        console.log('socks', data.data);
+        
         // if the image could not be classified or is considered "non-food", alert the user
         if (data.data === "The image was not classified as food by the IBM Image Recognition API.") {
-          this.presentAlert('The image was not classified as food by the IBM Image Recognition API.');
-        } 
+          this.presentAlert(data.data);
+        }
         // else we update the dataReturned object in our returnDataService
         else {
-          this.returnDataService.setData(data.data);
-          let parsedResponse = JSON.parse(data.data);
-          //console.log(parsedResponse);
-          this.SQLProvider.insertNewFood(parsedResponse.name, data.data);
+          let parsedResponse = this.returnDataService.setData(data.data);
+
+          // if the JSON contains any null values, print out alert to notify user
+          if (parsedResponse.weight === "null" || parsedResponse.weight === null) {
+            this.presentAlert(`Nutritional information for ${parsedResponse.name} could not be found on the Nutritionix API.`);
+          } 
+          
+          else {
+            this.SQLProvider.insertNewFood(parsedResponse.name, data.data);
+          }
         }
       })
       .catch((error) => {
