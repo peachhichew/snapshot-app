@@ -3,7 +3,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, ToastController, LoadingController, Platform } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReturnDataService } from '../return-data.service';
-// import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { SQLiteProvider } from '../../providers/SQLiteProvider';
 
 @Component({
