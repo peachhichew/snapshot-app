@@ -12,17 +12,14 @@ import { AppComponent } from './app.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-// import { File } from '@ionic-native/file';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-// new
-import { WebView } from '@ionic-native/ionic-webview/ngx';
+// import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 // import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
 // import { FormsModule } from '@angular/forms';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { SQLiteProvider } from '../providers/SQLiteProvider';
-// /Users/sky/Documents/School/ISTE-252/snapshot-app/src/providers/SQLiteProvider.ts
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +33,6 @@ import { SQLiteProvider } from '../providers/SQLiteProvider';
     File,
     FileTransfer,
     FileChooser,
-    WebView,
     HTTP,
     SQLite,
     SQLiteProvider,

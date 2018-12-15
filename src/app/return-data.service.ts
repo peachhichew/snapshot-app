@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ReturnDataService {
   // variable to keep track of the data we get back from our POST request
-  public dataReturned: any; // dis used 2 b object, it shouldve been any
+  public dataReturned: any;
 
   constructor() { }
 

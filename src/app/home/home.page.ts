@@ -3,7 +3,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, ToastController, LoadingController, Platform } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReturnDataService } from '../return-data.service';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+// import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { SQLiteProvider } from '../../providers/SQLiteProvider';
 
 @Component({
@@ -12,6 +12,7 @@ import { SQLiteProvider } from '../../providers/SQLiteProvider';
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
+  // we need a variable that will keep track of the current image and its data
   base64Image: any;
 
   constructor(private camera: Camera,
@@ -21,17 +22,16 @@ export class HomePage implements OnInit {
     private http: HTTP,
     private returnDataService: ReturnDataService,
     public platform: Platform,
-    private sqlite: SQLite,
+    // private sqlite: SQLite,
     private SQLProvider: SQLiteProvider) {
     platform.ready().then(() => {
       this.SQLProvider.createDatabase();
     });
   }
 
+  // once the component is loaded, we want default.jpg to be the placeholder image
   ngOnInit() {
     this.base64Image = "../default.jpg";
-    console.log(this.base64Image);
-    // console.log(this.dataReturned);
   }
 
   // allows user to upload images using the photo library as the image source
@@ -75,8 +75,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  // upload image to the server
+  // upload image to the server using a POST request
   uploadImage(imageData) {
+    // update the placeholder image source to be the image we are trying to upload
     this.base64Image = 'data:image/png;base64,' + imageData;
 
     // display loading animation during upload
@@ -93,13 +94,14 @@ export class HomePage implements OnInit {
       .then((data) => {
         // show confirmation message when successful
         this.presentToast("Image uploaded successfully");
-        console.log('socks', data.data);
+        console.log(data.data);
         
-        // if the image could not be classified or is considered "non-food", alert the user
+        // if the image could not be classified or is considered "non-food", 
+        // let the user know
         if (data.data === "The image was not classified as food by the IBM Image Recognition API.") {
           this.presentAlert(data.data);
         }
-        // else we update the dataReturned object in our returnDataService
+        // else we update the dataReturned object in our returnDataService and parse the data
         else {
           let parsedResponse = this.returnDataService.setData(data.data);
 
@@ -108,6 +110,7 @@ export class HomePage implements OnInit {
             this.presentAlert(`Nutritional information for ${parsedResponse.name} could not be found on the Nutritionix API.`);
           } 
           
+          // if there are no null values in the JSON, insert the food into the table
           else {
             this.SQLProvider.insertNewFood(parsedResponse.name, data.data);
           }
