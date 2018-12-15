@@ -10,14 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-// import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-// import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
-// import { FormsModule } from '@angular/forms';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { SQLiteProvider } from '../providers/SQLiteProvider';
 
@@ -30,9 +24,6 @@ import { SQLiteProvider } from '../providers/SQLiteProvider';
     StatusBar,
     SplashScreen,
     Camera,
-    File,
-    FileTransfer,
-    FileChooser,
     HTTP,
     SQLite,
     SQLiteProvider,
