@@ -12,7 +12,7 @@ import { SQLiteProvider } from '../../providers/SQLiteProvider';
 })
 
 export class UploadedPage implements OnInit, OnEnter, OnDestroy {
-  // declare a subscription object so that we can use it for attaching events 
+  // Declare a subscription object so that we can use it for attaching events 
   private subscription: Subscription;
 
   constructor(public platform: Platform,
@@ -23,7 +23,7 @@ export class UploadedPage implements OnInit, OnEnter, OnDestroy {
   public async ngOnInit(): Promise<void> {
     await this.onEnter();
 
-    // when the navigation from the previous page is ending, with the target
+    // When the navigation from the previous page is ending, with the target
     // of the router event being the uploaded page, call the onEnter function
     // prior to loading the rest of the page
     this.subscription = this.router.events.subscribe((event) => {
@@ -33,14 +33,14 @@ export class UploadedPage implements OnInit, OnEnter, OnDestroy {
     });
   }
 
-  // once "uploaded" becomes the active page, we want to grab all the food we've uploaded before
+  // Once "uploaded" becomes the active page, we want to grab all the food we've uploaded before
   // from the database
   public async onEnter(): Promise<void> {
     this.SQLProvider.getRecentFood();
   }
 
-  // when the component is destroyed by Angular, remove the subscription object.
-  // the object links to the navigation to this page, allowing it to repeat the next time
+  // When the component is destroyed by Angular, remove the subscription object.
+  // The object links to the navigation to this page, allowing it to repeat the next time
   // without having the event run twice
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -4,14 +4,14 @@ import { ToastController } from '@ionic/angular';
 
 @Injectable()
 export class SQLiteProvider {
-  // declare a var that will point to the initialized db:
+  // Declare a var that will point to the initialized db:
   public db: SQLiteObject;
 
   constructor(
     private sqlite: SQLite,
     public toastController: ToastController) { }
 
-  // using SQLite, we want to make a query to create the database that will contain 
+  // Using SQLite, we want to write a query to create the database and table that will contain 
   // our food information
   createDatabase() {
     this.sqlite.create({
@@ -25,7 +25,7 @@ export class SQLiteProvider {
     }).catch(e => console.log(e));
   }
 
-  // once the database is created, we want to display all the information that is in 
+  // Once the database + table are created, we want to display all the information that is in 
   // the 'food' table
   getRecentFood() {
     let numOfRows;
@@ -33,20 +33,20 @@ export class SQLiteProvider {
     // #resultsList is the place where we want to insert all this new HTML containing
     // information about food
     let list = document.querySelector('#resultsList');
-    // clear the HTML every time this method is called so that we can display new
+    // Clear the HTML every time this method is called so that we can display new
     // food information without having repeated data from the previous call
     list.innerHTML = "";
     this.db.executeSql(query, []).then((data) => {
       numOfRows = data.rows.length;
       for (let i = 0; i < numOfRows; i++) {
-        // get the name + health information of the food
+        // Get the name + health information of the food
         let foodName = data.rows.item(i).name;
         let healthInformation = JSON.parse(data.rows.item(i).information);
-        // create <h2> element that displays the name
+        // Create <h2> element that displays the name
         let nameOnPage = document.createElement('h2');
         nameOnPage.innerHTML = foodName;
-        // create <p> element that contains only the health information
-        // since we can access each individual property from the parsed JSON, we will be 
+        // Create <p> element that contains only the health information.
+        // Since we can access each individual property from the parsed JSON, we will be 
         // concatenating each property's value to generate a long string of information
         let detailsOnPage = document.createElement('p');
         detailsOnPage.innerHTML += "Weight: " + healthInformation.weight + "g<br>";
@@ -60,7 +60,7 @@ export class SQLiteProvider {
         detailsOnPage.innerHTML += "Total Sugars: " + healthInformation.sugar + "g<br>";
         detailsOnPage.innerHTML += "Protein: " + healthInformation.protein + "g<br>";
         detailsOnPage.innerHTML += "Potassium: " + healthInformation.potassium + "mg<br>";
-        // lastly we will append the <h2> and <p> elements to the #resultList
+        // Lastly, we will append the <h2> and <p> elements to the #resultList
         list.appendChild(nameOnPage);
         list.appendChild(detailsOnPage);
       }
@@ -70,7 +70,7 @@ export class SQLiteProvider {
       })
   }
 
-  // write a query to insert new food into the table
+  // Write a query to insert new food into the table
   insertNewFood(name, information) {
     let query = "insert into food (name, information) values (?, ?)";
       this.db.executeSql(query, [name, information]).then((data) => {
@@ -79,17 +79,4 @@ export class SQLiteProvider {
         console.log(e);
       })
   }
-
-
-  // async presentToast(msg) {
-  //   const toast = await this.toastController.create({
-  //     message: msg,
-  //     duration: 3000,
-  //     position: 'bottom'
-  //   });
-
-  //   toast.onDidDismiss();
-
-  //   toast.present();
-  // }
 }

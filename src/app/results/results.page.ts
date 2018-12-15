@@ -15,7 +15,7 @@ export class ResultsPage implements OnInit {
   ngOnInit() {
     this.result = { ...this.returnDataService.getData() };
 
-    // if we have no data to populate from the JSON, display an alert that tells the 
+    // If we have no data to populate from the JSON, display an alert that tells the 
     // user to upload an image
     if (this.isEmpty(this.result)) {
       this.presentAlert('Please upload an image.');
@@ -23,12 +23,12 @@ export class ResultsPage implements OnInit {
   }
 
   ngDoCheck() {
-    // use the lifecycle look to track any changes that have been made in the result object
+    // Use the lifecycle look to track any changes that have been made in the result object
       this.result = { ...this.returnDataService.getData() };
       console.log('doCheck()', this.result);
   }
 
-  // checking if the object doesn't have any keys/properties
+  // Checking if the object doesn't have any keys/properties
   isEmpty(obj) {
     for (let key in obj) {
       // if the object has its own properties, then it means it's not empty
