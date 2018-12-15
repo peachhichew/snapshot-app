@@ -21,7 +21,6 @@ export class HomePage implements OnInit {
     private http: HTTP,
     private returnDataService: ReturnDataService,
     public platform: Platform,
-    // private sqlite: SQLite,
     private SQLProvider: SQLiteProvider) {
     platform.ready().then(() => {
       this.SQLProvider.createDatabase();
